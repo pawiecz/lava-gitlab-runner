@@ -1,0 +1,17 @@
+{{- if .Values.artifactUpload.baseUrl }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "lava-gitlab-runner.fullname" . }}
+  labels:
+    {{- include "lava-gitlab-runner.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.artifactUpload.service.type }}
+  ports:
+    - name: upload
+      port: {{ .Values.artifactUpload.port }}
+      targetPort: upload
+      protocol: TCP
+  selector:
+    {{- include "lava-gitlab-runner.selectorLabels" . | nindent 4 }}
+{{- end }}

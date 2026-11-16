@@ -59,6 +59,11 @@ A helm chart is provided in the repository for the runner (in the `chart`
 directory). The main values in this chart that should be set are `gitlab.url` to
 set the gitlab url and `gitlab.token` to set the gitlab token.
 
+To enable artifact uploads, set `artifactUpload.baseUrl` (and optionally
+`artifactUpload.port` and `artifactUpload.service.type`). This exposes the
+upload port through a Service; make it reachable at `baseUrl` with an Ingress
+or LoadBalancer.
+
 # Runner Usage
 
 The runner is used with normal gitlab runner jobs in the same way as other

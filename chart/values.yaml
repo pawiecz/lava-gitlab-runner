@@ -15,6 +15,16 @@ gitlab:
   #deployements
   # token: 12345
 
+# Enable LAVA jobs to upload artifacts back to the runner (needs a runner image
+# that supports it). Uploads are disabled unless baseUrl is set.
+artifactUpload:
+  # Externally reachable base URL of the upload endpoint,
+  # e.g. https://my-runner-host:8443/artifacts
+  baseUrl: ""
+  port: 8443
+  service:
+    type: ClusterIP
+
 image:
   repository: ghcr.io/collabora/lava-gitlab-runner
   pullPolicy: Always

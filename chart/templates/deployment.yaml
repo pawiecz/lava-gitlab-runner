@@ -36,6 +36,12 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+          {{- if .Values.artifactUpload.baseUrl }}
+          ports:
+            - name: upload
+              containerPort: {{ .Values.artifactUpload.port }}
+              protocol: TCP
+          {{- end }}
           env:
             - name: GITLAB_URL
               value: {{ .Values.gitlab.url }}
@@ -50,6 +56,12 @@ spec:
               value: {{ .Values.loglevel }}
             - name: RUNNER_MAX_CONCURRENT_REQUESTS
               value: "{{ .Values.max_concurrent_requests }}"
+            {{- if .Values.artifactUpload.baseUrl }}
+            - name: LAVA_ARTIFACT_UPLOAD_BASE_URL
+              value: {{ .Values.artifactUpload.baseUrl | quote }}
+            - name: LAVA_ARTIFACT_UPLOAD_LISTEN_ADDR
+              value: "0.0.0.0:{{ .Values.artifactUpload.port }}"
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
