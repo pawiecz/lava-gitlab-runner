@@ -61,8 +61,9 @@ set the gitlab url and `gitlab.token` to set the gitlab token.
 
 To enable artifact uploads, set `artifactUpload.baseUrl` (and optionally
 `artifactUpload.port` and `artifactUpload.service.type`). This exposes the
-upload port through a Service; make it reachable at `baseUrl` with an Ingress
-or LoadBalancer.
+upload port through a Service; make it reachable at `baseUrl` either by
+setting `artifactUpload.ingress.enabled` (and the `hosts`/`tls`/`className`
+values under it) or with a LoadBalancer service type.
 
 # Runner Usage
 

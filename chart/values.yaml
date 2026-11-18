@@ -24,6 +24,23 @@ artifactUpload:
   port: 8443
   service:
     type: ClusterIP
+  # Expose the upload endpoint outside the cluster. The path(s) must match the
+  # path of baseUrl (the runner serves /artifacts/<key>/<path>). Uploaded files
+  # are kept in the runner pod, so keep replicaCount at 1 when enabling this.
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+      # cert-manager.io/cluster-issuer: letsencrypt-issuer
+    hosts:
+      - host: chart-example.local
+        paths:
+          - path: /artifacts
+            pathType: Prefix
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
 
 image:
   repository: ghcr.io/collabora/lava-gitlab-runner
